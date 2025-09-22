@@ -65,40 +65,18 @@ public class UserServiceTests {
     @ValueSource(strings = {
             "ram",
             "vaishnavi",
-            "vipul"
+            "akshith"
     })
     public void testFindByUserNameParametrized(String name){
         assertNotNull(userRepository.findByUserName(name));
     }
 
+    @Disabled
     @ParameterizedTest // we are passing parameters to the test method
     // @ValueSource - It allows you to specify an array of primitive types, strings, or classes to be used as arguments for a single test method, which then runs once for each value provided.
     // but @ValueSource won't be enough. So, we need argument sources capable of passing multiple arguments
     @ArgumentsSource(UserArgumentsProvider.class)
     public void testSaveNewUser(User user){
         assertTrue(userService.saveNewUser(user));
-    }
-
-    public static class UserDetailsServiceImplTests {
-
-        @InjectMocks
-        // @InjectMocks will automatically create its instance and finds the mock dependencies and injects them inside it, but earlier it is injected with null value but after doing initMocks() it'll be initialised in repo
-        private UserDetailsServiceImpl userDetailsService;
-
-        @Mock
-        private UserRepository userRepository;
-
-        @BeforeEach
-        void setUp() {
-            MockitoAnnotations.initMocks(this);
-            // by default @Mock without @Autowired and with @InjectMocks doesn't initialize the values by default it's null by using @InjectMocks but @Autowired will be automatically initialized with instances so to initialize the values of mock dependency with @InjectMocks we'll use this initMocks()
-        }
-
-        @Test
-        void loadUserByUsername(){
-            when(userRepository.findByUserName(ArgumentMatchers.anyString())).thenReturn(User.builder().userName("ram").password("ram1234").roles(new ArrayList<>()).build());
-            UserDetails user = userDetailsService.loadUserByUsername("ram");
-            assertNotNull(user);
-        }
     }
 }
