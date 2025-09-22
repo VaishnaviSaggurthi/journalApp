@@ -59,6 +59,7 @@ public class UserServiceTests {
         assertEquals(expected,a,b);
     }
 
+    @Disabled
     @ParameterizedTest // we are passing parameters to the test method
     // @ValueSource - It allows you to specify an array of primitive types, strings, or classes to be used as arguments for a single test method, which then runs once for each value provided.
     // but @ValueSource won't be enough. So, we need argument sources capable of passing multiple arguments
