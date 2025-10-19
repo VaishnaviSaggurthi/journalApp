@@ -13,12 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+// @Component is a generic stereotype for any Spring-managed component. It can be used to annotate classes at any layer of the application. Spring will automatically detect these classes through classpath scanning and register them as beans in the application context.
+@Service // @Service is a specialized form of @Component. It doesn't currently provide any additional behavior over the @Component annotation, but it's a good idea to use @Service over @Component in service-layer classes because it specifies intent better. This helps when you are looking at the code later, or when someone else is trying to understand your code.
+// @Service - Specifically indicates this class contains business logic
 @Slf4j
 public class UserService {
 
