@@ -9,6 +9,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 // Here the User Datatype is an entity which a collection should have and ObjectId datatype of id which is unique
 
 public interface UserRepository extends MongoRepository<User, ObjectId> {
+    // Query method DSL (Domain Specific Language) -- it is suitable for simple, clear queries no complex queries
+    // Query method to find a user by userName
     User findByUserName(String userName);
+    // Query method to delete a user by userName
     void deleteByUserName(String userName);
 }
