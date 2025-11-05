@@ -25,20 +25,33 @@ public class WeatherService {
     @Autowired
     private AppCache appCache;
 
+    @Autowired
+    private RedisService redisService;
+
     public WeatherResponse getWeather(String city) {
-        String finalAPI = appCache.appCache.get(AppCache.keys.WEATHER_API.toString()).replace(PlaceHolders.CITY, city).replace(PlaceHolders.API_KEY, apiKey);
+        WeatherResponse weatherResponse = redisService.get("weather_of_" + city, WeatherResponse.class);
 
-        /*
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set("key", "value");
+        if(weatherResponse != null){
+            return weatherResponse;
+        }
+        else {
+            String finalAPI = appCache.appCache.get(AppCache.keys.WEATHER_API.toString()).replace(PlaceHolders.CITY, city).replace(PlaceHolders.API_KEY, apiKey);
 
-        User user = User.builder().userName("vaishnavi").password("vaishnavi").build();
-        HttpEntity<User> httpEntity = new HttpEntity<>(user, httpHeaders);
-         */
+            /*
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("key", "value");
 
-        ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.POST, null, WeatherResponse.class);
-        // ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET, null, WeatherResponse.class);
-        WeatherResponse body = response.getBody();
-        return body;
+            User user = User.builder().userName("vaishnavi").password("vaishnavi").build();
+            HttpEntity<User> httpEntity = new HttpEntity<>(user, httpHeaders);
+             */
+
+            ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.POST, null, WeatherResponse.class);
+            // ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET, null, WeatherResponse.class);
+            WeatherResponse body = response.getBody();
+            if(body != null){
+                redisService.set("weather_of_" + city, body, 300L);
+            }
+            return body;
+        }
     }
 }
