@@ -4,10 +4,12 @@ import net.engineeringdigest.journalApp.cache.AppCache;
 import net.engineeringdigest.journalApp.entity.JournalEntry;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.enums.Sentiment;
+import net.engineeringdigest.journalApp.model.SentimentData;
 import net.engineeringdigest.journalApp.repository.UserRepositoryImpl;
 import net.engineeringdigest.journalApp.service.EmailService;
 import net.engineeringdigest.journalApp.service.SentimentAnalysisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -32,15 +34,18 @@ public class UserScheduler {
     @Autowired
     private AppCache appCache;
 
-    // @Scheduled(cron = "0 * * ? * *") -- every minute for testing
-    @Scheduled(cron = "0 0 9 * * SUN") // every Sunday at 9 AM
+    @Autowired
+    private KafkaTemplate<String, SentimentData> kafkaTemplate;
+
+    @Scheduled(cron = "0 * * ? * *") // every minute for testing
+    // @Scheduled(cron = "0 0 9 * * SUN") // every Sunday at 9 AM
     public void fetchUsersAndSendSAMail(){
         // fetch all users
         // for each user, send email to user
         List<User> users = userRepository.getUserForSentimentAnalysis();
         for(User user : users){
             List<JournalEntry> journalEntries = user.getJournalEntries();
-            List<Sentiment> sentiments = journalEntries.stream().filter(x -> x.getDate().isAfter(LocalDateTime.now().minus(7, ChronoUnit.DAYS))).map(x -> x.getSentiment()).collect(Collectors.toList());
+            List<Sentiment> sentiments = journalEntries.stream().filter(x -> x.getDate().isAfter(LocalDateTime.now().minus(30, ChronoUnit.DAYS))).map(x -> x.getSentiment()).collect(Collectors.toList());
             Map<Sentiment, Integer> sentimentCounts = new HashMap<>();
             for (Sentiment sentiment : sentiments) {
                 if (sentiment != null)
@@ -55,7 +60,10 @@ public class UserScheduler {
                 }
             }
             if (mostFrequentSentiment != null) {
-                emailService.sendEmail(user.getEmail(), "Sentiment Analysis for last 7 days", "Sentiment: " + mostFrequentSentiment.toString());
+                // emailService.sendEmail(user.getEmail(), "Sentiment Analysis for last 7 days", "Sentiment: " + mostFrequentSentiment.toString()); -- old way of sending email directly
+
+                SentimentData sentimentData = SentimentData.builder().email(user.getEmail()).sentiment("Sentiment for last 7 days " + mostFrequentSentiment).build(); // preparing data to send to kafka
+                kafkaTemplate.send("weekly-sentiments", sentimentData.getEmail(), sentimentData); // sending to kafka topic
             }
         }
     }

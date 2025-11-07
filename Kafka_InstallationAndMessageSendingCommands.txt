@@ -1,0 +1,61 @@
+Kafka:
+
+🟢 INSTALLATION COMMANDS
+
+zookeeper-server-start.bat ..\..\config\zookeeper.properties // To start Zookeeper server
+
+kafka-server-start.bat ..\..\config\server.properties  // To start Kafka server
+
+kafka-topics.bat --create --topic my-topic --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3 // To create a topic named 'my-topic' with 3 partitions and replication factor of 1
+
+kafka-console-producer.bat --broker-list localhost:9092 --topic my-topic // To produce messages to 'my-topic' topic
+
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic my-topic --from-beginning // To consume messages from 'my-topic' topic from the beginning
+
+🟢 SENDING MESSAGES COMMANDS
+
+zookeeper-server-start.bat ..\..\config\zookeeper.properties // To start Zookeeper server
+
+kafka-server-start.bat ..\..\config\server.properties // To start Kafka server
+
+kafka-topics.bat --create --topic foods --bootstrap-server localhost:9092 --replication-factor 1 --partitions 4 // To create a topic named 'foods' with 4 partitions and replication factor of 1
+
+kafka-console-producer.bat --broker-list localhost:9092 --topic foods --property "key.separator=-" --property "parse.key=true" // To produce messages to 'foods' topic with key-value pairs separated by '-'
+
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic foods --from-beginning -property "key.separator=-" --property "print.key=false" // To consume messages from 'foods' topic from the beginning, without printing keys
+
+kafka-topics.bat --bootstrap-server=localhost:9092 --list // To list all topics
+
+kafka-consumer-groups.bat --bootstrap-server=localhost:9092 --list // To list all consumer groups
+
+kafka-topics.bat --describe --topic fruits --bootstrap-server localhost:9092 // To describe a topic, it shows partitions, replicas, ISR etc.
+
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic fruits --group console-consumer-3617 // To consume messages as part of a specific consumer group
+
+kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 3 --partitions 3 --topic my-gadgets // To create a topic with specific replication factor and partitions -- for old kafka versions
+
+kafka-topics.bat --create --topic gadgets --bootstrap-server localhost:9092,localhost:9093,localhost:9094 --replication-factor 3 --partitions 3 // To create a topic with specific replication factor and partitions -- for new kafka versions
+
+kafka-console-producer.bat --bootstrap-server localhost:9092,localhost:9093,localhost:9094 --topic gadgets // To produce messages to a topic using multiple bootstrap servers
+
+kafka-console-consumer.bat --bootstrap-server localhost:9092,localhost:9093,localhost:9094 --topic gadgets --from-beginning // To consume messages from a topic using multiple bootstrap servers
+
+kafka-topics.bat --describe --topic gadgets --bootstrap-server localhost:9092 localhost:9093 localhost:9094 // To describe a topic using multiple bootstrap servers
+
+🟢 EXAMPLE WITH DIFFERENT TOPIC NAME
+
+Ex:
+Producer Command:
+kafka-console-producer.bat --broker-list localhost:9092 --topic fruits --property "key.separator=-" --property "parse.key=true"
+
+Consumer Command:
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic fruits --from-beginning -property "key.separator=-" --property "print.key=false"
+
+🟢 EXAMPLE WITH DIFFERENT TOPIC NAME
+
+Ex: 
+Producer Command:
+kafka-console-producer.bat --broker-list localhost:9092 --topic fruits --property "key.separator=-" --property "parse.key=true"
+
+Consumer Command: 
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic fruits --from-beginning -property "key.separator=-" --property "print.key=false"
