@@ -1,0 +1,31 @@
+# Production Configuration Template
+# Copy this to application-prod.properties and fill in your values
+
+# Server Configuration
+server.port=${PORT:8080}
+
+# Database Configuration (Use Render PostgreSQL or MongoDB)
+spring.data.mongodb.uri=${MONGODB_URI}
+# OR for PostgreSQL:
+# spring.datasource.url=${DATABASE_URL}
+# spring.jpa.hibernate.ddl-auto=update
+
+# Email Configuration
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=${EMAIL_USERNAME}
+spring.mail.password=${EMAIL_PASSWORD}
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+# Kafka Configuration (if using external Kafka service)
+spring.kafka.bootstrap-servers=${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+
+# Redis Configuration (if using external Redis)
+spring.redis.host=${REDIS_HOST:localhost}
+spring.redis.port=${REDIS_PORT:6379}
+spring.redis.password=${REDIS_PASSWORD:}
+
+# Logging
+logging.level.net.engineeringdigest.journalApp=INFO
+logging.level.org.springframework.security=DEBUG
