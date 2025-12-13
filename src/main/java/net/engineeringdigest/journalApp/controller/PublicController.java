@@ -39,16 +39,23 @@ public class PublicController {
      }
 
      @PostMapping("/signup")
-     public void signup(@RequestBody UserDTO user){
-         User newUser = new User();
-         newUser.setEmail(user.getEmail());
-         newUser.setUserName(user.getUserName());
-         newUser.setPassword(user.getPassword());
-         newUser.setSentimentAnalysis(user.isSentimentAnalysis());
-         userService.saveNewUser(newUser);
+     @io.swagger.v3.oas.annotations.Operation(summary = "Create new user account", description = "Register a new user with username, email and password")
+     public ResponseEntity<String> signup(@RequestBody UserDTO user){
+         try {
+             User newUser = new User();
+             newUser.setEmail(user.getEmail());
+             newUser.setUserName(user.getUserName());
+             newUser.setPassword(user.getPassword());
+             newUser.setSentimentAnalysis(user.isSentimentAnalysis());
+             userService.saveNewUser(newUser);
+             return ResponseEntity.ok("User created successfully");
+         } catch (Exception e) {
+             return ResponseEntity.badRequest().body("Error creating user: " + e.getMessage());
+         }
      }
 
      @PostMapping("/login")
+     @io.swagger.v3.oas.annotations.Operation(summary = "User login", description = "Authenticate user and return JWT token")
      public ResponseEntity<String> login(@RequestBody User user){
          try{
              authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(),user.getPassword()));
