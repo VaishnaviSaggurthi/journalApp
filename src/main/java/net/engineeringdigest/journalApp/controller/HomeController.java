@@ -25,11 +25,11 @@ public class HomeController {
                 "code{background:#f1f3f4;padding:2px 4px;border-radius:3px;font-family:monospace}" +
                 "</style></head><body>" +
                 "<div class='container'>" +
-                "<h1>📖 Journal App API Documentation</h1>" +
+                "<h1>Journal App API Documentation</h1>" +
                 "<p>A secure personal journal application with JWT authentication. Manage your journal entries with full CRUD operations.</p>" +
                 
                 "<div class='api-section'>" +
-                "<h2>🔐 Authentication Endpoints</h2>" +
+                "<h2>Authentication Endpoints</h2>" +
                 "<p>Public endpoints for user registration and authentication:</p>" +
                 "<div class='endpoint'><span class='method post'>POST</span>/public/signup<br>" +
                 "<small>Create a new user account. Body: {\"userName\": \"string\", \"email\": \"string\", \"password\": \"string\"}</small></div>" +
@@ -40,39 +40,39 @@ public class HomeController {
                 "</div>" +
                 
                 "<div class='api-section'>" +
-                "<h2>📝 Journal Entry Management</h2>" +
-                "<p class='auth-required'>⚠️ All endpoints require JWT authentication</p>" +
-                "<div class='endpoint'><span class='method get'>GET</span>/journal/v2 <span class='auth-required'>🔒</span><br>" +
+                "<h2>Journal Entry Management</h2>" +
+                "<p class='auth-required'>All endpoints require JWT authentication</p>" +
+                "<div class='endpoint'><span class='method get'>GET</span>/journal/v2 <span class='auth-required'>[AUTH]</span><br>" +
                 "<small>Get all journal entries for authenticated user</small></div>" +
-                "<div class='endpoint'><span class='method post'>POST</span>/journal/v2 <span class='auth-required'>🔒</span><br>" +
+                "<div class='endpoint'><span class='method post'>POST</span>/journal/v2 <span class='auth-required'>[AUTH]</span><br>" +
                 "<small>Create new journal entry. Body: {\"title\": \"string\", \"content\": \"string\"}</small></div>" +
-                "<div class='endpoint'><span class='method get'>GET</span>/journal/v2/id/{id} <span class='auth-required'>🔒</span><br>" +
+                "<div class='endpoint'><span class='method get'>GET</span>/journal/v2/id/{id} <span class='auth-required'>[AUTH]</span><br>" +
                 "<small>Get specific journal entry by ID</small></div>" +
-                "<div class='endpoint'><span class='method put'>PUT</span>/journal/v2/id/{id} <span class='auth-required'>🔒</span><br>" +
+                "<div class='endpoint'><span class='method put'>PUT</span>/journal/v2/id/{id} <span class='auth-required'>[AUTH]</span><br>" +
                 "<small>Update journal entry. Body: {\"title\": \"string\", \"content\": \"string\"}</small></div>" +
-                "<div class='endpoint'><span class='method delete'>DELETE</span>/journal/v2/id/{id} <span class='auth-required'>🔒</span><br>" +
+                "<div class='endpoint'><span class='method delete'>DELETE</span>/journal/v2/id/{id} <span class='auth-required'>[AUTH]</span><br>" +
                 "<small>Delete journal entry by ID</small></div>" +
                 "</div>" +
                 
                 "<div class='api-section'>" +
-                "<h2>👤 User Management</h2>" +
-                "<p class='auth-required'>⚠️ All endpoints require JWT authentication</p>" +
-                "<div class='endpoint'><span class='method get'>GET</span>/user <span class='auth-required'>🔒</span><br>" +
+                "<h2>User Management</h2>" +
+                "<p class='auth-required'>All endpoints require JWT authentication</p>" +
+                "<div class='endpoint'><span class='method get'>GET</span>/user <span class='auth-required'>[AUTH]</span><br>" +
                 "<small>Get current user profile information</small></div>" +
-                "<div class='endpoint'><span class='method put'>PUT</span>/user <span class='auth-required'>🔒</span><br>" +
+                "<div class='endpoint'><span class='method put'>PUT</span>/user <span class='auth-required'>[AUTH]</span><br>" +
                 "<small>Update user profile</small></div>" +
-                "<div class='endpoint'><span class='method delete'>DELETE</span>/user <span class='auth-required'>🔒</span><br>" +
+                "<div class='endpoint'><span class='method delete'>DELETE</span>/user <span class='auth-required'>[AUTH]</span><br>" +
                 "<small>Delete user account and all associated data</small></div>" +
                 "</div>" +
                 
                 "<div class='api-section'>" +
-                "<h2>🏥 System Health</h2>" +
+                "<h2>System Health</h2>" +
                 "<div class='endpoint'><span class='method get'>GET</span>/health-check<br>" +
                 "<small>Check application health status</small></div>" +
                 "</div>" +
                 
                 "<div class='api-section'>" +
-                "<h2>🔧 How to Use</h2>" +
+                "<h2>How to Use</h2>" +
                 "<p><strong>Step 1:</strong> Create an account using <code>POST /public/signup</code></p>" +
                 "<p><strong>Step 2:</strong> Login using <code>POST /public/login</code> to get your JWT token</p>" +
                 "<p><strong>Step 3:</strong> Include the token in all authenticated requests:</p>" +
@@ -81,7 +81,7 @@ public class HomeController {
                 "</div>" +
                 
                 "<div class='api-section'>" +
-                "<h2>📋 Example Usage</h2>" +
+                "<h2>Example Usage</h2>" +
                 "<p><strong>Create Account:</strong></p>" +
                 "<code>curl -X POST https://journalapp-stff.onrender.com/public/signup -H \"Content-Type: application/json\" -d '{\"userName\":\"john\",\"email\":\"john@example.com\",\"password\":\"password123\"}'</code>" +
                 "<p><strong>Login:</strong></p>" +
