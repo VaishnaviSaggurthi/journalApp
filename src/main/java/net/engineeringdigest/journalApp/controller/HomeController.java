@@ -88,6 +88,10 @@ public class HomeController {
                 "<code>curl -X POST https://journalapp-stff.onrender.com/public/login -H \"Content-Type: application/json\" -d '{\"userName\":\"john\",\"password\":\"password123\"}'</code>" +
                 "</div>" +
                 
+                "<div style='text-align:center;margin-top:30px;padding:20px;border-top:1px solid #dee2e6;color:#6c757d'>" +
+                "<p>Developed by Vaishnavi Saggurthi</p>" +
+                "</div>" +
+                
                 "</div></body></html>";
         
         return ResponseEntity.ok().header("Content-Type", "text/html").body(html);
